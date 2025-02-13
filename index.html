@@ -4,38 +4,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>投資型保單蒙地卡羅模擬</title>
+    <title>蒙地卡羅保單模擬</title>
     <script src="https://cdn.plot.ly/plotly-3.0.0.min.js"></script>
     <script src="script.js" defer></script>
+    <style>
+        div.section {
+            border-style: solid;
+            border-width: 1px;
+            border-color: black;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            padding-top: 2px;
+            padding-bottom: 2px;
+        }
+
+
+    </style>
 </head>
 
 <body>
-    <h1>投資型保單 - 蒙地卡羅模擬</h1>
+    <h1>蒙地卡羅模擬 - 投資型保單</h1>
     <form id="simForm">
-        <label>性別：
-            <select id="sex">
-                <option value="0">男性</option>
-                <option value="1">女性</option>
-            </select>
-        </label><br />
-        <label>初始投資額度（元）：<input type="number" id="initialInvestment" value="0"></label><br />
-        <label>投保額度（元）：<input type="number" id="insuranceAmount" value="20000000"></label><br />
-        <label>每年保費（元）：<input type="number" id="annualPremium" value="240000"></label><br />
-        <label>開始年齡：<input type="number" id="ageStart" value="35" min="0" max="110"></label><br />
-        <label>結束年齡：<input type="number" id="ageEnd" value="100" min="0" max="110"></label><br />
-        <label>投資年限：<input type="number" id="investmentYears" value="30"></label><br />
-        <label>投資年化報酬率（%）：<input type="number" id="meanReturn" value="6"></label><br />
-        <label>投資標準差（%）：<input type="number" id="stdDev" value="18"></label><br />
-        <br />
-        <label>保單管理費（元/年）：<input type="number" id="policyFee" value="1200"></label><br />
-        <label>費用率（%/年）：<input type="number" id="expenseRatio" value="1" min="0" max="100"></label><br />
-        <div>保險費用</div>
-        <label>第一年（%）：<input type="number" name="premiumFeeRates[]" value="57" min="0" max="100"></label>
-        <label>第二年（%）：<input type="number" name="premiumFeeRates[]" value="32" min="0" max="100"></label>
-        <label>第三年（%）：<input type="number" name="premiumFeeRates[]" value="22" min="0" max="100"></label>
-        <label>第四年（%）：<input type="number" name="premiumFeeRates[]" value="12" min="0" max="100"></label>
-        <label>第五年（%）：<input type="number" name="premiumFeeRates[]" value="12" min="0" max="100"></label>
-        <br />
+        <div class="section">
+            <label>性別：
+                <select id="sex">
+                    <option value="0">男性</option>
+                    <option value="1">女性</option>
+                </select>
+            </label><br />
+            <label>初始投資額度（元）：<input type="number" id="initialInvestment" value="0"></label><br />
+            <label>投保額度（元）：<input type="number" id="insuranceAmount" value="20000000"></label><br />
+            <label>每年保費（元）：<input type="number" id="annualPremium" value="240000"></label><br />
+            <label>開始年齡：<input type="number" id="ageStart" value="35" min="0" max="110"></label><br />
+            <label>結束年齡：<input type="number" id="ageEnd" value="100" min="0" max="110"></label><br />
+            <label>投資年限：<input type="number" id="investmentYears" value="30"></label><br />
+        </div>
+        <div class="section">
+            <label>投資年化報酬率（%）：<input type="number" id="meanReturn" value="6"></label><br />
+            <label>投資標準差（%）：<input type="number" id="stdDev" value="18"></label><br />
+        </div>
+        <div class="section">
+            <label>保單管理費（元/年）：<input type="number" id="policyFee" value="1200"></label><br />
+            <label>費用率（%/年）：<input type="number" id="expenseRatio" value="1" min="0" max="100"></label><br />
+            <div>前五年保險費用</div>
+            <label>第一年（%）：<input type="number" name="premiumFeeRates[]" value="57" min="0" max="100"></label>
+            <label>第二年（%）：<input type="number" name="premiumFeeRates[]" value="32" min="0" max="100"></label>
+            <label>第三年（%）：<input type="number" name="premiumFeeRates[]" value="22" min="0" max="100"></label>
+            <label>第四年（%）：<input type="number" name="premiumFeeRates[]" value="12" min="0" max="100"></label>
+            <label>第五年（%）：<input type="number" name="premiumFeeRates[]" value="12" min="0" max="100"></label>
+        </div>
         <button type="submit">開始模擬</button>
     </form>
 
