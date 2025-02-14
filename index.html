@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>投資型保單蒙地卡羅模擬</title>
+    <title>投資型保單甲型蒙地卡羅模擬</title>
+    <!-- <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script> -->
     <script src="https://cdn.plot.ly/plotly-3.0.0.min.js"></script>
     <script src="script.js" defer></script>
     <style>
@@ -28,7 +29,7 @@
 </head>
 
 <body>
-    <h1>投資型保單 - 蒙地卡羅模擬</h1>
+    <h1>投資型保單甲型 - 蒙地卡羅模擬</h1>
     <form id="simForm">
         <div class="section">
             <label>性別：
@@ -65,19 +66,37 @@
 
     <div id="notes">
         <h2>備註</h2>
+        費用的細節需閱讀保單條款，每個保險商品都略有不同。
         <dl>
             <dt>初始投資額度</dt>
             <dd>
                 如果在第一期有繳交額外的保費，要注意是否會被收取超額保費費用。
-                在模擬器中請輸入<b>實際入帳的金額</b>。
+                請在模擬器中輸入<b>實際入帳的金額</b>。
+            </dd>
+            <dt>費用率</dt>
+            <dd>
+                保險公司會定期根據保單帳戶價值的多寡收取費用。
+                有時會根據投資標的的不同收取不同的費用。
+                這裡簡化為單一費率。
+            </dd>
+            <dt>淨危險保額</dt>
+            <dd>
+                <i>max(0, 投保額度 - 保單帳戶價值)</i>
+            </dd>
+            <dt>保險成本</dt>
+            <dd>
+                <i>淨危險保額 * 自然費率</i> <br />
+                自然費率根據性別、扣款當時的年齡決定，隨年紀上升而上升、且男生比女生高。
             </dd>
             <dt>投資年化報酬率</dt>
             <dd>
-                要注意年化報酬中有多少比例來自配息，以及保單條款中對股息再投入的相關規定。
+                要注意年化報酬中有多少比例來自<b>配息</b>，
+                以及保單條款中對股息再投入的相關規定。
                 有些保單如果股息要再投入，會被視為超額保費而產生額外的手續費。
-                另外，配息需要繳綜合所得稅和二代健保補充保費。
+                另外，配息需要繳<b>綜合所得稅</b>和<b>二代健保補充保費</b>。
             </dd>
         </dl>
+        <a href="https://github.com/Stimim/ILP-Simulator">GitHub</a>
     </div>
 </body>
 
