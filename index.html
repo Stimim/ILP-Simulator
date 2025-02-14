@@ -17,6 +17,13 @@
             padding-top: 2px;
             padding-bottom: 2px;
         }
+        dt {
+            font-weight: bold;
+        }
+        dd {
+            font-size: 0.8rem;
+            margin-bottom: 0.5em;
+        }
     </style>
 </head>
 
@@ -35,11 +42,11 @@
             <label>每年保費（元）：<input type="number" id="annualPremium" value="240000"></label><br />
             <label>開始年齡：<input type="number" id="ageStart" value="35" min="0" max="110"></label><br />
             <label>結束年齡：<input type="number" id="ageEnd" value="100" min="0" max="110"></label><br />
-            <label>投資年限：<input type="number" id="investmentYears" value="30"></label><br />
+            <label>投資幾年：<input type="number" id="investmentYears" value="20" min="0" max="110"></label><br />
         </div>
         <div class="section">
             <label>投資年化報酬率（%）：<input type="number" id="meanReturn" value="6" step="0.01"></label><br />
-            <label>投資標準差（%）：<input type="number" id="stdDev" value="18" step="0.01"></label><br />
+            <label>投資年化標準差（%）：<input type="number" id="stdDev" value="18" step="0.01"></label><br />
         </div>
         <div class="section">
             <label>保單管理費（元/年）：<input type="number" id="policyFee" value="1200"></label><br />
@@ -55,6 +62,23 @@
     </form>
 
     <div id="chart"></div>
+
+    <div id="notes">
+        <h2>備註</h2>
+        <dl>
+            <dt>初始投資額度</dt>
+            <dd>
+                如果在第一期有繳交額外的保費，要注意是否會被收取超額保費費用。
+                在模擬器中請輸入<b>實際入帳的金額</b>。
+            </dd>
+            <dt>投資年化報酬率</dt>
+            <dd>
+                要注意年化報酬中有多少比例來自配息，以及保單條款中對股息再投入的相關規定。
+                有些保單如果股息要再投入，會被視為超額保費而產生額外的手續費。
+                另外，配息需要繳綜合所得稅和二代健保補充保費。
+            </dd>
+        </dl>
+    </div>
 </body>
 
 </html>
