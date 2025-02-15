@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>投資型保單甲型蒙地卡羅模擬</title>
-    <!-- <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script> -->
+    <title>投資型壽險甲型 - 蒙地卡羅模擬</title>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="https://cdn.plot.ly/plotly-3.0.0.min.js"></script>
     <script src="script.js" defer></script>
     <style>
@@ -29,7 +29,7 @@
 </head>
 
 <body>
-    <h1>投資型保單甲型 - 蒙地卡羅模擬</h1>
+    <h1>投資型壽險甲型 - 蒙地卡羅模擬</h1>
     <form id="simForm">
         <div class="section">
             <label>性別：
@@ -50,8 +50,8 @@
             <label>投資年化標準差（%）：<input type="number" id="stdDev" value="18" step="0.01"></label><br />
         </div>
         <div class="section">
-            <label>保單管理費（元/年）：<input type="number" id="policyFee" value="1200"></label><br />
-            <label>費用率（%/年）：<input type="number" id="expenseRatio" value="1" min="0" max="100" step="0.01"></label><br />
+            <label>保單管理費（元 / 年）：<input type="number" id="policyFee" value="1200"></label><br />
+            <label>費用率（% / 年）：<input type="number" id="expenseRatio" value="1" min="0" max="100" step="0.01"></label><br />
             <div>前五年保險費用</div>
             <label>第一年（%）：<input type="number" name="premiumFeeRates[]" value="57" min="0" max="100" step="0.01"></label>
             <label>第二年（%）：<input type="number" name="premiumFeeRates[]" value="32" min="0" max="100" step="0.01"></label>
@@ -66,37 +66,90 @@
 
     <div id="notes">
         <h2>備註</h2>
-        費用的細節需閱讀保單條款，每個保險商品都略有不同。
         <dl>
+            <dt>目的</dt>
+            <dd>
+                保險業務在推銷投資型保單時，常常會使用固定的年化報酬（比如 6% ）來模擬保險帳戶價值的變化。
+                這種模擬結果會讓人以為只要繳交二十年左右的保費，帳戶價值就可以穩定上升，沒有歸零的風險。
+                但這樣的模擬沒有考慮到股票市場的波動。這個模擬器的目的就是要展現在股票市場隨機波動的情況下，
+                帳戶價值可能會落在那些區間。
+            </dd>
+            <dt>注意事項</dt>
+            <dd>
+                <ul>
+                    <li style="color: red;">
+                        本網頁內容並非投資意見，請根據你個人的需求、投資目標、財務狀況決定你的資產配置和保險規劃。
+                    </li>
+                    <li>
+                        費用的細節需閱讀保單條款，每個保險商品都略有不同。我們盡量將各種費用列為可調整的參數。
+                    </li>
+                    <li>
+                        不同的 ETF 、基金有不一樣的年化報酬和年化標準差。請根據投資標的的特性調整數值。
+                    </li>
+                </ul>
+            </dd>
             <dt>初始投資額度</dt>
             <dd>
                 如果在第一期有繳交額外的保費，要注意是否會被收取超額保費費用。
-                請在模擬器中輸入<b>實際入帳的金額</b>。
+                請在模擬器中輸入<b>實際入帳的金額</b>。<br />
+                如果想要模擬已經扣款幾年的保單，可以在這邊輸入目前的保單帳戶價值，並調整下面的前五年保險費用。
+            </dd>
+            <dt>每年保費</dt>
+            <dd>
+                每年繳多少保費給保險公司。如果你投資標的會收取<b>申購手續費</b>，可以在這邊填入扣除後的保費。
+            </dd>
+            <dt>保單管理費</dt>
+            <dd>
+                保險公司定期收取的<b>固定</b>費用，和保單帳戶價值無關。
             </dd>
             <dt>費用率</dt>
             <dd>
                 保險公司會定期根據保單帳戶價值的多寡收取費用。
-                有時會根據投資標的的不同收取不同的費用。
+                有的保單對不同的投資標的會設定不同的費率。
                 這裡簡化為單一費率。
             </dd>
             <dt>淨危險保額</dt>
             <dd>
-                <i>max(0, 投保額度 - 保單帳戶價值)</i>
+                \begin{equation} \max(0, 投保額度 - 保單帳戶價值) \end{equation}
+            </dd>
+            <dt>自然費率</dt>
+            <dd>
+                簡單來說，隨著年紀變大，死亡機率上升，保險費率就會跟著上升。
+                比較新的保單的自然費率應該都是由行政院公布的
+                <a href="https://gazette.nat.gov.tw/EG_FileManager/eguploadpub/eg027056/ch04/type2/gov36/num12/images/Eg01.pdf">臺灣壽險業第六回經驗生命表</a> 
+                計算而來。（2021-03-25 的<a href="https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0,2&mcustomize=news_view.jsp&dataserno=202103250002&toolsflag=Y&dtable=News">新聞稿</a>）
+                <br />
+                例如，經驗生命表中， 30 歲男性對應的數值為 0.000657 。如果保單以「元 / 每萬淨危險保額 每月」為單位，則
+                \begin{equation} \frac{0.000657}{12} * 10000 = 0.5475 \end{equation}
+                該保單條款中 30 歲男性的數字應該要是 0.5475 左右。 
             </dd>
             <dt>保險成本</dt>
             <dd>
-                <i>淨危險保額 * 自然費率</i> <br />
-                自然費率根據性別、扣款當時的年齡決定，隨年紀上升而上升、且男生比女生高。
+                \begin{equation} 淨危險保額 * 自然費率 \end{equation}
+            </dd>
+            <dt>費用率和保險成本</dt>
+            <dd>
+                注意到費用率和保險成本都和保單帳戶價值有關，但一個隨帳戶價值增加而增加，一個隨帳戶價值增加而減少。<br />
+                \begin{equation} 帳戶價值 * 費用率 + \max(投保額度 - 帳戶價值, 0) * 自然費率 \end{equation}
+                或是
+                \begin{cases}
+                    帳戶價值 * 費用率,                                   & \text{if } 帳戶價值 \geq 投保額度 \\
+                    帳戶價值 * (費用率 - 自然費率) + 投保額度 * 自然費率,  & \text{if } 帳戶價值 \lt 投保額度
+                \end{cases}
+                一個有趣的觀察是，當年輕時，自然費率往往小於費用率，這時帳戶價值越低，被保險公司扣的錢就越少。<br />
+                當年紀大時，自然費率大於費用率，反而會希望帳戶價值越高越好，這樣要交給保險公司的錢比較少。
+                但這樣保險公司沒有承擔風險，相當於沒有保險。<br />
+                <s>「年輕時用自然費率繳保費，年紀大時沒有保險」這聽起來和<b>期間壽險</b>很像</s>
             </dd>
             <dt>投資年化報酬率</dt>
             <dd>
-                要注意年化報酬中有多少比例來自<b>配息</b>，
+                請確認年化報酬中有多少比例來自<b>配息</b>，
                 以及保單條款中對股息再投入的相關規定。
-                有些保單如果股息要再投入，會被視為超額保費而產生額外的手續費。
+                有些保單將再投入的股息視為<b>超額保費</b>，會收取額外的手續費。
                 另外，配息需要繳<b>綜合所得稅</b>和<b>二代健保補充保費</b>。
             </dd>
         </dl>
-        <a href="https://github.com/Stimim/ILP-Simulator">GitHub</a>
+        <a href="https://github.com/Stimim/ILP-Simulator" title="Source Code">GitHub</a>
     </div>
 </body>
 
